@@ -3,8 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>영양소 섭취 판정기 — 내 영양제, 기준에 맞나?</title>
-<meta name="description" content="먹는 영양제를 등록하고 체크하면, 성분 총량이 공식 권장량·상한 대비 어디쯤인지 판정해드려요. 결과는 텍스트·이미지로 저장하세요.">
+<title>영양제 중복·부족 체크 | 내 영양제 성분 분석기 (무료)</title>
+<meta name="description" content="먹는 영양제를 입력하면 안 챙기는 영양소와 과다·중복 섭취를 2025 한국 영양소 섭취기준으로 한눈에 체크. 성별·연령별 기준, 설치 없이 무료로 바로 사용하세요.">
+<meta property="og:title" content="영양제 중복·부족 체크 — 내 영양제 성분 분석기">
+<meta property="og:description" content="먹는 영양제를 입력하면 안 챙기는 영양소·과다·중복을 한국 기준으로 한눈에. 무료, 설치 없음.">
+<meta property="og:type" content="website">
+<meta name="robots" content="index, follow">
 <!-- ═══════════════════════════════════════════════════════
   [운영 메모]
   · 저장 안 함(세션 메모리만). 새로고침 시 초기화.
@@ -158,6 +162,11 @@ h1 em{font-style:normal;color:var(--green)}
 .btn-img{background:linear-gradient(135deg,var(--mint),var(--green));color:#fff}
 
 .disclaimer{margin-top:22px;font-size:11px;line-height:1.7;color:var(--sub);border-top:1px solid var(--line);padding-top:14px;word-break:keep-all}
+.related{margin-top:26px}
+.related-h{font-size:12px;font-weight:700;color:var(--green);margin-bottom:9px}
+.related a{display:block;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:13px 15px;text-decoration:none;color:var(--ink);font-size:13.5px;font-weight:600;box-shadow:var(--shadow);transition:border-color .15s}
+.related a:hover{border-color:var(--mint)}
+.related a span{display:block;font-size:11.5px;font-weight:400;color:var(--sub);margin-top:3px}
 .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(14px);background:var(--ink);color:#fff;font-size:13px;font-weight:600;padding:11px 20px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:9}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -231,6 +240,11 @@ h1 em{font-style:normal;color:var(--green)}
 </div>
 
 
+
+<div class="related">
+  <div class="related-h">📖 영양제 가이드</div>
+  <a href="./combo.html">영양제 같이 먹으면 안 되는 조합<span>철분+칼슘처럼 흡수를 방해하는 조합, 함께 먹으면 좋은 조합 정리</span></a>
+</div>
 
 <p class="disclaimer">
   ⚕️ 본 도구는 2025 한국인 영양소 섭취기준(보건복지부·한국영양학회)·식약처 일일섭취량 기반 <b>일반 정보 제공용</b>이며
