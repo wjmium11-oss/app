@@ -280,22 +280,22 @@ h1 em{font-style:normal;color:var(--green)}
    ※ B군은 B1·B2·B6·B12·엽산·나이아신 6개로 분리(개별 KDRI 기준). 입력은 'B군 한번에' 묶음 지원
    ※ K2·글루타치온: 단일 공식기준 없음 → null */
 const NUT = {
-  // ── 1단계: 입문 ──
-  b1:{name:"비타민B1(티아민)",unit:"mg",rec:1.2,ul:null,tier:1,
-      recByGroup:{ m:[1.2,1.2,1.2,1.1,1.1], f:[1.1,1.1,1.1,1.0,0.8] }},
-  b2:{name:"비타민B2(리보플라빈)",unit:"mg",rec:1.5,ul:null,tier:1,
-      recByGroup:{ m:[1.5,1.5,1.5,1.4,1.4], f:[1.2,1.2,1.2,1.1,1.0] }},
-  b6:{name:"비타민B6",unit:"mg",rec:1.5,ul:100,tier:1,
-      recByGroup:{ m:[1.5,1.5,1.5,1.5,1.5], f:[1.4,1.4,1.4,1.4,1.4] }},
-  b12:{name:"비타민B12",unit:"µg",rec:2.4,ul:null,tier:1},          // 성인 전체 동일
-  folate:{name:"엽산",unit:"µg",rec:400,ul:1000,tier:1},            // 성인 전체 동일
-  niacin:{name:"나이아신(B3)",unit:"mg",rec:14,ul:35,tier:1,        // UL=니코틴산 기준(보수적). 니코틴아미드는 850
-      recByGroup:{ m:[14,14,14,13,12], f:[13,13,13,12,11] }},
+  // ── 1단계: 입문 (국민 필수 영양소) ──
   vitC:{name:"비타민C",unit:"mg",rec:100,ul:2000,tier:1},           // 성인 전체 동일
-  probio:{name:"유산균",unit:"억 CFU",rec:100,ul:null,tier:1},      // 식약처(비KDRI)
-  // ── 2단계: 기초 ──
-  vitD:{name:"비타민D",unit:"IU",rec:400,ul:4000,tier:2,
+  vitD:{name:"비타민D",unit:"IU",rec:400,ul:4000,tier:1,
         recByGroup:{ m:[400,400,400,600,600], f:[400,400,400,600,600] }}, // 65세+ 15µg
+  probio:{name:"유산균",unit:"억 CFU",rec:100,ul:null,tier:1},      // 식약처(비KDRI)
+  // ── 2단계: 기초 (기초 활력 및 오메가) ──
+  b1:{name:"비타민B1(티아민)",unit:"mg",rec:1.2,ul:null,tier:2,
+      recByGroup:{ m:[1.2,1.2,1.2,1.1,1.1], f:[1.1,1.1,1.1,1.0,0.8] }},
+  b2:{name:"비타민B2(리보플라빈)",unit:"mg",rec:1.5,ul:null,tier:2,
+      recByGroup:{ m:[1.5,1.5,1.5,1.4,1.4], f:[1.2,1.2,1.2,1.1,1.0] }},
+  b6:{name:"비타민B6",unit:"mg",rec:1.5,ul:100,tier:2,
+      recByGroup:{ m:[1.5,1.5,1.5,1.5,1.5], f:[1.4,1.4,1.4,1.4,1.4] }},
+  b12:{name:"비타민B12",unit:"µg",rec:2.4,ul:null,tier:2},          // 성인 전체 동일
+  folate:{name:"엽산",unit:"µg",rec:400,ul:1000,tier:2},            // 성인 전체 동일
+  niacin:{name:"나이아신(B3)",unit:"mg",rec:14,ul:35,tier:2,        // UL=니코틴산 기준(보수적). 니코틴아미드는 850
+      recByGroup:{ m:[14,14,14,13,12], f:[13,13,13,12,11] }},
   omega3:{name:"오메가3(EPA+DHA)",unit:"mg",rec:250,ul:null,tier:2}, // AI 250, 공식 UL 없음
   // ── 3단계: 목적별 ──
   vitA:{name:"비타민A",unit:"µg",rec:800,ul:3000,tier:3,
