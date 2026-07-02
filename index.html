@@ -69,7 +69,24 @@ h1 em{font-style:normal;color:var(--green)}
 .prod .pn{flex:1;font-size:14.5px;font-weight:700;cursor:pointer}
 .prod .pdel{background:none;border:none;color:var(--sub);font-size:15px;cursor:pointer;opacity:.5}
 .prod .pdel:hover{opacity:1;color:var(--warn)}
-.prod .ings{font-size:11.5px;color:var(--sub);margin-top:5px;margin-left:33px;word-break:keep-all}
+.prod .ings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+  margin-left: 33px;
+}
+.prod .ing-chip {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 2.5px 7px;
+  font-size: 11px;
+  color: var(--sub);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+}
 .add-prod-btn{width:100%;background:var(--card);border:1.5px dashed var(--line);border-radius:13px;padding:14px;font-family:inherit;font-size:14px;font-weight:600;color:var(--green);cursor:pointer}
 .add-prod-btn:hover{background:var(--mint-soft);border-color:var(--mint)}
 
@@ -120,14 +137,99 @@ h1 em{font-style:normal;color:var(--green)}
 #gap-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 16px;box-shadow:var(--shadow)}
 .gap-head{margin-bottom:13px;padding-bottom:11px;border-bottom:1px solid var(--line)}
 .gap-head .t{font-size:15px;font-weight:700}
-.gap-covered{font-size:12px;color:var(--ok);font-weight:600;margin-bottom:12px}
+.gap-covered {
+  background: var(--mint-soft);
+  border: 1.5px solid var(--mint);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+.gap-covered .gc-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 8px;
+}
+.gap-covered .gc-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.gap-covered .gc-chip {
+  background: #fff;
+  border: 1px solid var(--mint);
+  border-radius: 6px;
+  padding: 2.5px 6.5px;
+  font-size: 11px;
+  color: var(--green);
+  font-weight: 600;
+}
 .gap-grid{display:flex;flex-wrap:wrap;gap:7px}
 .gap-chip{font-size:12.5px;font-weight:600;padding:7px 12px;border-radius:999px;border:1.5px solid #e3c9c6;background:#fdf2f1;color:#b8564d}
 .gap-chip.has{border-color:var(--ok);background:var(--ok-soft);color:var(--ok)}
 .gap-none{font-size:13px;color:var(--ok);font-weight:600}
 .gap-items{display:flex;flex-direction:column;gap:8px}
-.tier-group{margin-bottom:14px}
-.tier-label{font-size:12px;font-weight:700;color:var(--green);margin-bottom:7px;padding-bottom:5px;border-bottom:1px dashed var(--line)}
+
+.tier-group {
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+  background: var(--card);
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+.tier-group.completed {
+  border-color: var(--mint);
+  background: linear-gradient(180deg, var(--card), var(--mint-soft));
+}
+.tier-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tier-group.completed .tier-label {
+  color: var(--green);
+}
+.tier-taken-section {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+}
+.tier-group.completed .tier-taken-section {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+.tier-taken-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--sub);
+  margin-bottom: 6px;
+}
+.tier-taken-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.tier-taken-chip {
+  background: var(--mint-soft);
+  border: 1px solid var(--mint);
+  border-radius: 6px;
+  padding: 2.5px 7px;
+  font-size: 11px;
+  color: var(--green);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+}
+.tier-taken-chip::before {
+  content: '✓ ';
+  margin-right: 2px;
+}
 .gap-item{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1.5px solid #ecd9d7;background:#fdf6f5;border-radius:12px;padding:10px 13px}
 .gi-name{font-size:13.5px;font-weight:700;color:#a8504a;flex:0 0 auto}
 .gi-links{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
@@ -805,7 +907,7 @@ function renderProducts(){
   const box=$("prod-list");
   box.innerHTML="";
   products.forEach(p=>{
-    const ingStr=Object.entries(p.ings).map(([k,v])=>`${NUT[k].name} ${v}${NUT[k].unit}`).join(" · ");
+    const ingHTML=Object.entries(p.ings).map(([k,v])=>`<span class="ing-chip">${NUT[k].name} ${v}${NUT[k].unit}</span>`).join("");
     const val=valueOf(p);
     let costHTML="";
     if(val){
@@ -819,7 +921,7 @@ function renderProducts(){
         <span class="pn" data-id="${p.id}">${p.name}</span>
         <button class="pdel" data-id="${p.id}" aria-label="삭제">×</button>
       </div>
-      <div class="ings">${ingStr}</div>${costHTML}`;
+      <div class="ings">${ingHTML}</div>${costHTML}`;
     box.appendChild(div);
   });
   // 체크 토글
@@ -890,22 +992,42 @@ function renderGaps(){
 
   let html="";
   if(have.length){
-    html+=`<div class="gap-covered">✓ 챙기는 성분 ${have.length}개: ${have.map(k=>NUT[k].name).join(", ")}</div>`;
+    const chipHTML = have.map(k=>`<span class="gc-chip">${NUT[k].name}</span>`).join("");
+    html+=`
+      <div class="gap-covered">
+        <div class="gc-title">✓ 챙기고 있는 성분 (${have.length}개)</div>
+        <div class="gc-chips">${chipHTML}</div>
+      </div>
+    `;
   }
   if(!missing.length){
     html+=`<div class="gap-none">주요 ${Object.keys(NUT).length}개 성분이 모두 들어있어요 👍</div>`;
   }else{
     html+=`<div style="font-size:12px;color:var(--sub);margin-bottom:13px">아래 성분은 등록한 영양제에 <b>들어있지 않아요</b> (미포함). 단계별로 정리했어요 — 입문 단계부터 채워보세요.</div>`;
     [1,2,3,4].forEach(tier=>{
-      const inTier=missing.filter(k=>NUT[k].tier===tier);
-      if(!inTier.length) return;
-      const T=TIERS[tier];
-      html+=`<div class="tier-group">
-        <div class="tier-label">${T.emoji} ${tier}단계 · ${T.name}</div>
-        <div class="gap-items">`+inTier.map(k=>{
+      const keysInTier = Object.keys(NUT).filter(k => NUT[k].tier === tier);
+      const missingInTier = keysInTier.filter(k => !have.includes(k));
+      const takenInTier = keysInTier.filter(k => have.includes(k));
+      const T = TIERS[tier];
+      
+      const isCompleted = missingInTier.length === 0;
+      
+      let tierClass = "tier-group";
+      let tierTitle = "";
+      if(isCompleted){
+        tierClass += " completed";
+        tierTitle = `🎉 ${T.emoji} ${tier}단계 · ${T.name} (완료! ${keysInTier.length}/${keysInTier.length})`;
+      }else{
+        tierTitle = `${T.emoji} ${tier}단계 · ${T.name} (${keysInTier.length}개 중 ${takenInTier.length}개 복용)`;
+      }
+      
+      html+=`<div class="${tierClass}">
+        <div class="tier-label">${tierTitle}</div>`;
+        
+      if(missingInTier.length > 0){
+        html+=`<div class="gap-items">`+missingInTier.map(k=>{
           const nm=NUT[k].name;
           const q=encodeURIComponent(nm.replace(/\(.*\)|\/.*/g,"").trim());
-          // ⚠️ 지금은 일반 검색 링크(자리). 제휴 가입 후 추적 링크로 교체.
           const iherb=`https://kr.iherb.com/search?kw=${q}`;
           const coupang=`https://www.coupang.com/np/search?q=${q}`;
           return `<div class="gap-item">
@@ -915,7 +1037,20 @@ function renderGaps(){
               <a class="gi-btn coupang" href="${coupang}" target="_blank" rel="noopener nofollow">쿠팡</a>
             </div>
           </div>`;
-        }).join("")+`</div></div>`;
+        }).join("")+`</div>`;
+      }
+      
+      if(takenInTier.length > 0){
+        html+=`
+          <div class="tier-taken-section">
+            <div class="tier-taken-label">✓ 복용 중인 성분</div>
+            <div class="tier-taken-chips">
+              ${takenInTier.map(k => `<span class="tier-taken-chip">${NUT[k].name}</span>`).join("")}
+            </div>
+          </div>
+        `;
+      }
+      html+=`</div>`;
     });
     html+=`<div class="affil-notice">※ 위 링크는 제휴 링크 자리입니다. 향후 링크를 통한 구매 시 수수료를 받을 수 있으며, 구매자에게 추가 비용은 없습니다. 특정 제품 구매를 권유하는 것이 아닙니다.</div>`;
   }
