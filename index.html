@@ -245,76 +245,97 @@ h1 em{font-style:normal;color:var(--green)}
 .card-head .d{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--sub)}
 .records{display:flex;flex-direction:column;gap:10px}
 .empty{padding:24px;text-align:center;font-size:13.5px;color:var(--sub)}
-.rec {
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 9px 12px;
+.cat-panel {
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
 }
-.rec.warn{border-left:4px solid var(--warn);background:linear-gradient(to right,var(--warn-soft),var(--card) 38%)}
-.rec.caution{border-left:4px solid var(--caution);background:linear-gradient(to right,var(--caution-soft),var(--card) 38%)}
-.rec.ok{border-left:4px solid var(--ok);background:linear-gradient(to right,var(--ok-soft),var(--card) 38%)}
-.rec.low{border-left:4px solid var(--low);background:linear-gradient(to right,var(--low-soft),var(--card) 38%)}
-.rec.low2{border-left:4px solid #d9b54a;background:linear-gradient(to right,#fbf5e3,var(--card) 38%)}
-.rec.info{border-left:4px solid var(--sub);background:linear-gradient(to right,#f0f2f4,var(--card) 38%)}
-
-.rec .top {
+.cat-panel .cat-header {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1.5px solid var(--line);
+}
+.cat-chart {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5px;
-  flex-wrap: wrap;
-  gap: 4px;
+  flex-direction: column;
+  gap: 12px;
 }
-.rec .top-left {
+.chart-row {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--line);
 }
-.rec .nm {
-  font-size: 13.5px;
+.chart-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.chart-label {
+  width: 120px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.chart-label .nm {
+  font-size: 13px;
   font-weight: 700;
   color: var(--ink);
 }
-.rec .verdict-badge {
-  font-size: 10.5px;
-  font-weight: 700;
-  padding: 2px 6.5px;
-  border-radius: 5px;
-  display: inline-flex;
-  align-items: center;
-  white-space: nowrap;
-}
-.rec.warn .verdict-badge { background: var(--warn-soft); color: var(--warn); }
-.rec.caution .verdict-badge { background: var(--caution-soft); color: var(--caution); }
-.rec.ok .verdict-badge { background: var(--mint-soft); color: var(--ok); }
-.rec.low .verdict-badge { background: var(--low-soft); color: var(--low); }
-.rec.low2 .verdict-badge { background: #fbf5e3; color: #b8901f; }
-.rec.info .verdict-badge { background: #f0f2f4; color: var(--sub); }
-
-.rec .ref-inline {
-  font-size: 11px;
+.chart-label .ref {
+  font-size: 10px;
   color: var(--sub);
-  margin-left: 2px;
 }
-.rec .amt {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 13.5px;
-  font-weight: 700;
-  color: var(--ink);
-  margin-left: auto;
+.chart-bar-container {
+  flex: 1;
+  min-width: 50px;
 }
-.rec .bar {
-  height: 4px;
-  border-radius: 999px;
+.chart-bar-container .bar {
+  height: 5px;
+  border-radius: 99px;
   background: #eef3f0;
   overflow: hidden;
+  position: relative;
 }
-.rec .bar i {
+.chart-bar-container .bar i {
   display: block;
   height: 100%;
-  border-radius: 999px;
+  border-radius: 99px;
 }
+.chart-value {
+  width: 130px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+.chart-value .val-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.chart-value .verdict-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2.5px 5px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+.verdict-badge.warn { background: var(--warn-soft); color: var(--warn); }
+.verdict-badge.caution { background: var(--caution-soft); color: var(--caution); }
+.verdict-badge.ok { background: var(--mint-soft); color: var(--ok); }
+.verdict-badge.low { background: var(--low-soft); color: var(--low); }
+.verdict-badge.low2 { background: #fbf5e3; color: #b8901f; }
+.verdict-badge.info { background: #f0f2f4; color: var(--sub); }
 .card-foot{margin-top:14px;padding-top:10px;border-top:1px solid var(--line);text-align:center;font-size:10px;color:var(--sub)}
 
 .actions{display:flex;gap:10px;margin-top:14px}
@@ -1110,6 +1131,19 @@ function renderGaps(){
   box.innerHTML=html;
 }
 
+function getCategory(key) {
+  // vitamins
+  if (['vitC', 'vitD', 'vitB1', 'vitB2', 'vitB6', 'vitB12', 'folic', 'niacin', 'vitA', 'vitE', 'vitK1', 'vitK2'].includes(key)) {
+    return 'vitamin';
+  }
+  // minerals
+  if (['mg', 'zinc', 'fe', 'ca', 'se', 'cu', 'mn'].includes(key)) {
+    return 'mineral';
+  }
+  // functionals
+  return 'functional';
+}
+
 function renderCard(){
   renderGaps();
   const sum=currentSum();
@@ -1117,31 +1151,59 @@ function renderCard(){
   const box=$("records");
   if(!keys.length){ box.innerHTML=`<div class="empty">영양제를 등록하고 체크하면 판정 결과가 여기 나와요.</div>`; return; }
   box.innerHTML="";
-  keys.forEach(key=>{
-    const v=NUT[key],total=sum[key],j=judge(key,total);
-    const rec=getRec(key), ul=getUl(key);
-    let scaleR, refTxt;
-    if(rec==null){
-      scaleR="공식 섭취기준 정보 없음";
-      refTxt="공식 권장·상한 기준 없음 (섭취량만 표시)";
-    }else{
-      scaleR=ul?"상한 "+ul.toLocaleString()+v.unit:"권장 "+rec.toLocaleString()+v.unit+" (상한 없음)";
-      refTxt=ul
-        ? `권장 ${rec.toLocaleString()}${v.unit} / 상한 ${ul.toLocaleString()}${v.unit}`
-        : `권장 ${rec.toLocaleString()}${v.unit} · 상한 기준 없음`;
-    }
-    const div=document.createElement("div");
-    div.className=`rec ${j.cls}`;
-    div.innerHTML=`<div class="top">
-        <div class="top-left">
-          <span class="nm">${v.nm || v.name}</span>
-          <span class="verdict-badge">${j.txt}</span>
-          <span class="ref-inline">(${refTxt})</span>
+  
+  const CAT_META = {
+    vitamin: { name: "🧪 비타민 (Vitamins)" },
+    mineral: { name: "🪨 미네랄 (Minerals)" },
+    functional: { name: "🌱 기능성 및 기타 (Functionals)" }
+  };
+  
+  const categories = { vitamin: [], mineral: [], functional: [] };
+  keys.forEach(key => {
+    const cat = getCategory(key);
+    categories[cat].push(key);
+  });
+  
+  Object.entries(categories).forEach(([cat, catKeys]) => {
+    if (!catKeys.length) return;
+    
+    const panel = document.createElement("div");
+    panel.className = "cat-panel";
+    
+    let chartHTML = `<div class="cat-header">${CAT_META[cat].name}</div><div class="cat-chart">`;
+    
+    catKeys.forEach(key => {
+      const v=NUT[key], total=sum[key], j=judge(key,total);
+      const rec=getRec(key), ul=getUl(key);
+      let refTxt;
+      if(rec==null){
+        refTxt="기준 없음";
+      }else{
+        refTxt=ul
+          ? `권장 ${rec.toLocaleString()} / 상한 ${ul.toLocaleString()}`
+          : `권장 ${rec.toLocaleString()} (상한 없음)`;
+      }
+      
+      chartHTML += `
+        <div class="chart-row">
+          <div class="chart-label">
+            <span class="nm">${v.name}</span>
+            <span class="ref">${refTxt}</span>
+          </div>
+          <div class="chart-bar-container">
+            <div class="bar"><i style="width:${Math.min(j.pct,100)}%;background:${j.color}"></i></div>
+          </div>
+          <div class="chart-value">
+            <span class="val-num">${total.toLocaleString()}${v.unit}</span>
+            <span class="verdict-badge ${j.cls}">${j.txt}</span>
+          </div>
         </div>
-        <span class="amt">${total.toLocaleString()}${v.unit}</span>
-      </div>
-      <div class="bar"><i style="width:${Math.min(j.pct,100)}%;background:${j.color}"></i></div>`;
-    box.appendChild(div);
+      `;
+    });
+    
+    chartHTML += `</div>`;
+    panel.innerHTML = chartHTML;
+    box.appendChild(panel);
   });
 }
 
